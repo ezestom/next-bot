@@ -1,0 +1,137 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useChat } from 'ai/react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { X, BotIcon } from 'lucide-react'
+import { getLlamaCompletion } from '@/lib/llama'  // Importa tu función de IA
+
+export function Bot() {
+  const { messages } = useChat()
+  const [isWindowOpen, setIsWindowOpen] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [prompt, setPrompt] = useState('') // Estado para capturar el input del usuario
+  const [botMessages, setBotMessages] = useState(messages) // Nuevo estado para manejar los mensajes del bot
+  const [loading, setLoading] = useState(false); // State to manage loading
+
+  // Función para obtener la respuesta de IA
+  const completion = async () => {
+    const response = await getLlamaCompletion(prompt)
+    return response
+  }
+
+  const handleToggleWindow = () => {
+    setIsAnimating(true)
+    setIsWindowOpen(prev => !prev)
+  }
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (prompt.trim() === '') return; // Avoid sending empty messages
+
+    // Add user's message
+    setBotMessages(prev => [...prev, { id: Date.now().toString(), role: 'user', content: prompt }]);
+
+    // Clear the input
+    setPrompt('');
+
+    // Set loading state
+    setLoading(true);
+
+    try {
+      // Get AI response
+      const response = await completion();
+
+      // Add bot's response
+      setBotMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: response }]);
+    } catch (error) {
+      // Handle any errors
+      console.error("Error fetching AI response:", error);
+      setBotMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Sorry, I couldn't process your request." }]);
+    } finally {
+      // Reset loading state
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    if (isAnimating) {
+      const timer = setTimeout(() => setIsAnimating(false), 300) // Match this with the CSS transition duration
+      return () => clearTimeout(timer)
+    }
+  }, [isAnimating])
+
+  return (
+    <div className="fixed inset-0 sm:bottom-4 sm:right-4 sm:inset-auto flex items-end justify-end">
+      <div
+        className={`
+          w-full h-full sm:w-[400px] sm:h-auto
+          transition-all duration-300 ease-in-out
+          ${isWindowOpen
+            ? 'opacity-100 scale-100 translate-y-0'
+            : 'opacity-0 scale-95 translate-y-full pointer-events-none'
+          }
+        `}
+      >
+        <Card className="w-full h-full sm:h-auto flex flex-col">
+          <CardHeader className="flex-shrink-0">
+            <CardTitle className="flex justify-between items-center">
+              Cacta AI Chatbot
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleToggleWindow}
+                aria-label="Close window"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex-grow overflow-hidden">
+            <ScrollArea className="h-full pr-4">
+
+              {botMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`mb-2 leading-normal text-sm ${message.role === 'assistant' ? 'text-blue-600' : 'text-green-600 '
+                    }`}
+                >
+                  <strong>{message.role === 'assistant' ? 'Cacta AI Assistant: ' : 'You: '}</strong>
+                  {message.content}
+                </div>
+              ))}
+              {loading && <div className="text-gray-500">Cacta AI Assistant is typing...</div>}
+            </ScrollArea>
+          </CardContent>
+          <CardFooter className="flex-shrink-0">
+            <form onSubmit={handleSendMessage} className="flex w-full space-x-2">
+              <Input
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)} // Capturar el input del usuario
+                placeholder="Write your question..."
+                className="flex-grow"
+              />
+              <Button type="submit">Send</Button>
+            </form>
+          </CardFooter>
+        </Card>
+      </div>
+      <div
+        className={`
+          fixed bottom-4 right-4
+          transition-all duration-300 ease-in-out
+          ${!isWindowOpen
+            ? 'opacity-100 scale-100 translate-y-0'
+            : 'opacity-0 scale-95 translate-y-full pointer-events-none'
+          }
+        `}
+      >
+        <Button onClick={handleToggleWindow} className="shadow-lg">
+          <BotIcon className="h-6 w-6" />
+        </Button>
+      </div>
+    </div>
+  )
+}

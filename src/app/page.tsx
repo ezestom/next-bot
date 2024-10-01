@@ -1,15 +1,17 @@
+import { Bot } from "@/components/bot";
 import Image from "next/image";
+import cacta from "@/app/img/cacta.png";
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <Bot />
+      <main className="flex flex-col gap-8 row-start-2 items-center">
         <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
+          className="dark:invert flex justify-center"
+          src={cacta}
           alt="Next.js logo"
-          width={180}
-          height={38}
+          width={380}
           priority
         />
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
