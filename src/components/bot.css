@@ -1,3 +1,8 @@
 #scroll{
    scrollbar-width: none;
 }
+/* Evita que un elemento en focus desplace la vista */
+:focus {
+   scroll-margin-top: 0; /* No aplica margen al hacer focus */
+   scroll-behavior: auto; /* Evita el scroll suave que puede causar movimiento */
+}
