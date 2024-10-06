@@ -46,7 +46,7 @@ export function Bot() {
 
   const handleToggleWindow = () => {
     const chatInput = document.getElementById('chat-input')
-    if (chatInput) chatInput.focus()
+    if (chatInput) chatInput.focus({ preventScroll: true })
     setIsAnimating(true)
     setIsWindowOpen(prev => !prev)
   }
