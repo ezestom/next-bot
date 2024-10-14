@@ -67,7 +67,7 @@ export function Bot() {
     setPrompt('');
 
     // Verificar si el prompt contiene alguna palabra clave
-    const keywordResponse = keywordResponses.find(item => item.keywords.some(keyword => normalizedPrompt.includes(keyword.toLowerCase())));
+    const keywordResponse = keywordResponses.find(item => item.keywords.some(keyword => normalizedPrompt.includes(normalizePrompt(keyword))));
 
     if (keywordResponse) {
       // Si encuentra una coincidencia con una palabra clave, mostrar la respuesta predefinida
@@ -90,8 +90,8 @@ export function Bot() {
     }
 
     // Establecer estado de carga para simular typing
-    setLoading(true);
 
+    setLoading(true);
     try {
       // Obtener respuesta de IA
       await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo
