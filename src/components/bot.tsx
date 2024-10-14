@@ -91,7 +91,7 @@ export function Bot() {
           { id: generateUniqueId(), role: 'assistant', content: keywordResponse.response }
         ]);
         setLoading(false); // Finalizar el indicador de escritura
-      }, 2000);
+      }, 3000);
       return;
     }
 
@@ -103,7 +103,7 @@ export function Bot() {
           { id: generateUniqueId(), role: 'assistant', content: fallbackResponse }
         ]);
         setLoading(false); // Finalizar el indicador de escritura
-      }, 2000);
+      }, 3000);
       return;
     }
 
@@ -113,7 +113,7 @@ export function Bot() {
         const response = await completion();
         setBotMessages(prev => [...prev, { id: generateUniqueId(), role: 'assistant', content: response }]);
         setLoading(false); // Finalizar el indicador de escritura
-      }, 2000); // Retraso de 2 segundos
+      }, 3000);
 
     } catch (error) {
       console.error("Error fetching AI response:", error);
@@ -127,6 +127,12 @@ export function Bot() {
     }
   };
 
+  useEffect(() => {
+    const isAnimatingTimeout = setTimeout(() => {
+      setIsAnimating(false)
+    }, 300);
+    return () => clearTimeout(isAnimatingTimeout);
+  }, [isAnimating]);
 
   useEffect(() => {
     const scrollArea = document.getElementById('scroll');
@@ -160,7 +166,7 @@ export function Bot() {
                   </div>
                 </div>
               ))}
-              {loading && <div className="text-gray-500 text-sm font-bold">Cacta AI Assistant is typing...</div>}
+              {loading && <div className="text-gray-500 text-sm font-bold animate-pulse">Cacta AI Assistant is typing...</div>}
             </ScrollArea>
           </CardContent>
           <CardFooter className="flex-shrink-0">
