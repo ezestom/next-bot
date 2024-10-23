@@ -5,10 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { X, BotIcon, Send } from 'lucide-react'
+import { X, BotIcon, Send, Rocket } from 'lucide-react'
 import { getLlamaCompletion } from '@/lib/llama'
 import "./bot.css"
 import { keywordResponses, allowedTopics, fallbackResponses } from '@/lib/consts'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 let messageCounter = 0;
 
@@ -41,16 +46,17 @@ export function Bot() {
       .replace(/[\u0300-\u036f]/g, ""); // Elimina los acentos
   }
 
-  const isValidPrompt = (prompt: string) => {
-    return allowedTopics.some(topic => prompt.includes(topic.toLowerCase()));
-  };
+  // const isValidPrompt = (prompt: string) => {
+  //   return allowedTopics.some(topic => prompt.includes(topic.toLowerCase()));
+  // };
 
-  const generateFallbackResponse = () => {
-    return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-  }
+  // const generateFallbackResponse = () => {
+  //   return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+  // }
 
   const handleToggleWindow = () => {
     setIsAnimating(true)
+    document.getElementById('chat-input')?.focus()
     setIsWindowOpen(prev => !prev)
 
     if (!isWindowOpen) {
@@ -79,53 +85,37 @@ export function Bot() {
 
     // Agregar el mensaje del usuario con ID único
     setBotMessages(prev => [...prev, { id: generateUniqueId(), role: 'user', content: prompt }]);
-
     setPrompt('');
 
+    // Verificar si hay respuesta basada en palabras clave
     const keywordResponse = keywordResponses.find(item => item.keywords.some(keyword => normalizedPrompt.includes(normalizePrompt(keyword))));
 
-    if (keywordResponse) {
-      setTimeout(() => { // Simular un retraso de 2 segundos
-        setBotMessages(prev => [
-          ...prev,
-          { id: generateUniqueId(), role: 'assistant', content: keywordResponse.response }
-        ]);
-        setLoading(false); // Finalizar el indicador de escritura
-      }, 3000);
-      return;
-    }
-
-    if (!isValidPrompt(normalizedPrompt)) {
-      const fallbackResponse = generateFallbackResponse();
-      setTimeout(() => { // Simular un retraso de 2 segundos
-        setBotMessages(prev => [
-          ...prev,
-          { id: generateUniqueId(), role: 'assistant', content: fallbackResponse }
-        ]);
-        setLoading(false); // Finalizar el indicador de escritura
-      }, 3000);
-      return;
-    }
-
-    try {
-      // Simular el tiempo de respuesta de la IA
-      setTimeout(async () => {
+    // Si no hay coincidencia, pasa el control a la IA directamente
+    if (!keywordResponse) {
+      try {
         const response = await completion();
         setBotMessages(prev => [...prev, { id: generateUniqueId(), role: 'assistant', content: response }]);
-        setLoading(false); // Finalizar el indicador de escritura
-      }, 3000);
-
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      setTimeout(() => {
+      } catch (error) {
+        console.error("Error fetching AI response:", error);
         setBotMessages(prev => [
           ...prev,
           { id: generateUniqueId(), role: 'assistant', content: "Lo siento, hubo un problema al procesar tu solicitud. Inténtalo de nuevo más tarde." }
         ]);
-        setLoading(false); // Finalizar el indicador de escritura
-      }, 3000); // Retraso de 3 segundos
+      }
+      setLoading(false);
+      return;
     }
+
+    // Si hay una respuesta de palabras clave, mostrarla
+    setTimeout(() => {
+      setBotMessages(prev => [
+        ...prev,
+        { id: generateUniqueId(), role: 'assistant', content: keywordResponse.response }
+      ]);
+      setLoading(false);
+    }, 3000);
   };
+
 
   useEffect(() => {
     const isAnimatingTimeout = setTimeout(() => {
@@ -186,9 +176,21 @@ export function Bot() {
         </Card>
       </div>
       <div className={`fixed bottom-4 right-4 transition-all duration-300 ease-in-out ${!isWindowOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-full pointer-events-none'}`}>
-        <Button onClick={handleToggleWindow} className="shadow-lg">
-          <BotIcon className="h-6 w-6" />
-        </Button>
+        <HoverCard>
+          <HoverCardTrigger>
+            <Button onClick={handleToggleWindow} className="shadow-lg">
+              <BotIcon className="h-6 w-6" />
+            </Button> </HoverCardTrigger>
+          <HoverCardContent>
+            <div className="p-2">
+              <p className="text-sm font-black flex">AI Chatbot - Powered by Team Cacta Tech <Rocket /></p>
+              <p className="text-sm">You can chat with the AI and get answers to your questions about our app.
+              </p>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+
+
       </div>
     </div>
   )
