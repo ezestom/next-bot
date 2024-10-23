@@ -193,6 +193,12 @@ export const allowedTopics = [
 	"energías limpias",
 	"sustentabilidad",
 	"medio ambiente",
+	"agricultura",
+	"aplicación",
+	"software",
+	"eficiencia",
+	"informes",
+	"indicadores",
 ];
 
 export const fallbackResponses = [
