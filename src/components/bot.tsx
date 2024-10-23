@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { X, BotIcon, Send, Rocket } from 'lucide-react'
 import { getLlamaCompletion } from '@/lib/llama'
 import "./bot.css"
-import { keywordResponses, allowedTopics, fallbackResponses } from '@/lib/consts'
+import { keywordResponses } from '@/lib/consts'
 import {
   HoverCard,
   HoverCardContent,
