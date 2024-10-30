@@ -5,7 +5,7 @@ export const keywordResponses = [
 			"Cacta es una app de sustentabilidad que automatiza, calcula y reporta el impacto ambiental de tu empresa.",
 	},
 	{
-		keywords: ["Software", "Cacta", "software agrícola"],
+		keywords: ["Agricultura", "agricultores", "campo"],
 		response:
 			"Cacta es mucho más que un software; es la puerta al futuro de la industria agrícola, ayudando a automatizar procesos y mejorar la eficiencia.",
 	},
@@ -92,7 +92,7 @@ export const keywordResponses = [
 	},
 	{
 		keywords: [
-			"Cadena ",
+			"Cadena",
 			"valor",
 			"impacto en la cadena de valor",
 			"indicadores cadena de valor",
