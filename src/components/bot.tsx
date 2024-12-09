@@ -65,7 +65,7 @@ export function Bot() {
 
       // Saludar al abrir el chat por primera vez
       if (!hasGreeted) {
-        setBotMessages([{ id: Date.now().toString(), role: 'assistant', content: "¡Hola! Soy Cacta AI Assistant. Puedo brindarte más información sobre nuestra App" }]);
+        setBotMessages([{ id: Date.now().toString(), role: 'assistant', content: "¡Hola! Soy Cacta AI Assistant. Estoy para brindarte más información sobre nuestra App." }]);
         setHasGreeted(true);
       }
     }
@@ -184,7 +184,7 @@ export function Bot() {
           <HoverCardContent>
             <div className="p-2">
               <p className="text-sm font-black flex">AI Chatbot - Powered by Team Cacta Tech <Rocket /></p>
-              <p className="text-sm">You can chat with the AI and get answers to your questions about our app.
+              <p className="text-sm">You can chat with the AI and get answers to your questions about our sustentability app.
               </p>
             </div>
           </HoverCardContent>
