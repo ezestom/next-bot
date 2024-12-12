@@ -178,7 +178,7 @@ export function Bot() {
       <div className={`fixed bottom-4 right-4 transition-all duration-300 ease-in-out ${!isWindowOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-full pointer-events-none'}`}>
         <HoverCard>
           <HoverCardTrigger>
-            <Button onClick={handleToggleWindow} className="outline outline-2 rounded-md outline-[#007d67]">
+            <Button id='open-bot' onClick={handleToggleWindow} className="outline outline-2 rounded-md outline-[#007d67]">
               <BotIcon className="h-6 w-6" />
             </Button> </HoverCardTrigger>
           <HoverCardContent>
