@@ -71,7 +71,7 @@ export const keywordResponses = [
 			"Con Cacta tendrás acceso directo al software a traves de accesos unicos y cuentas personalizadas. Además nuestro software  cuenta con disponibilidad decreación de  diferentes accesos y nos adaptamos a estructuras con usuarios de gestión única o  multiusuarios.",
 	},
 	{
-		keywords: ["Precios", "Costos", "Precio", "Costo"],
+		keywords: ["Precios", "Costos", "Precio", "Costo", "Pricing"],
 		// category: "Costos y Planes",
 		response:
 			"Los precios varían según las hectáreas a medir y el tipo de cultivo. Sin embargo, nuestra solución está diseñada para adaptarse a las necesidades de todo tipo de productores, desde pequeñas empresas hasta grandes corporaciones con operaciones a gran escala.",
@@ -149,7 +149,7 @@ export const keywordResponses = [
 			"Nuestra herramienta cuenta con un amplio esquema de financiación y de descuentos. Para ello necesitamos realizar una evaluación de usuario a lo que te  invitamos a solicitar una solicitud de descuento  en el boton de contactanos y uno de nuestros especialistas se pondrá en contacto inmediatamente contigo",
 	},
 	{
-		keywords: ["Escalabilidad de costos", "Escalabilidad"],
+		keywords: ["Escalabilidad"],
 		// category: "Costos y Planes",
 		response:
 			"Nuestro esquema de precios está diseñado para ser escalable y flexible, ofreciendo incentivos para aumentar la cantidad de hectáreas y productos a medir. Estos incentivos incluyen descuentos por contratación, financiamiento a través de instituciones bancarias y descuentos por volumen. Creemos que, a mayor medición, mayor será el impacto positivo que podemos lograr juntos. Para más información, no dudes en contactar a tu agente comercial. ¡Estamos aquí para ayudarte!",
@@ -393,13 +393,13 @@ export const keywordResponses = [
 			"Para una cotización es necesario contar con la cantidad de hectareas a medir y el número de produtos.  Para mayor información te invitamos a solicitar una cotización en el boton de contactanos y uno de nuestros especialistas se pondrá en contacto inmediatamente contigo",
 	},
 	{
-		keywords: ["Estimación de costos", "Estimación", "Costos"],
+		keywords: ["Estimación de costos", "Estimación"],
 		// category: "Cotización y Presupuesto",
 		response:
 			"Los precios varían según las hectáreas a medir y el tipo de cultivo. Sin embargo, nuestra solución está diseñada para adaptarse a las necesidades de todo tipo de productores, desde pequeñas empresas hasta grandes corporaciones con operaciones a gran escala.",
 	},
 	{
-		keywords: ["Evaluación de precios", "Precios"],
+		keywords: ["Evaluación de precios", "Evaluación"],
 		// category: "Cotización y Presupuesto",
 		response:
 			"El pricing de la herramienta varia dentro de 3 paquetes diferrenciales. Básico, Estandar y corporativo cada uno pensado para potenciar y beneficiar a los distintos tipos de agricultores. Para mayor información te invitamos a solicitar una cotización en el boton de contactanos y uno de nuestros especialistas se pondrá en contacto inmediatamente contigo",
