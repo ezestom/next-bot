@@ -134,7 +134,7 @@ export function Bot() {
 
 
   return (
-    <div className="fixed inset-0 sm:bottom-4 sm:right-4 sm:inset-auto flex items-end justify-end">
+    <div className="fixed bottom-0 w-full md:inset-0 sm:bottom-4 sm:right-4 sm:inset-auto flex items-end justify-end h-1/2 md:h-screen">
       <div
         className={`w-full h-full sm:w-[400px] sm:h-auto transition-all duration-300 ease-in-out ${isWindowOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-full pointer-events-none'}`}
       >
